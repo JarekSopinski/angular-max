@@ -7,9 +7,9 @@
 <p *ngIf="areDetailsDisplayed">Secret Password = tuna</p>
 <ul *ngIf="buttonClicks.length > 0">
     <li 
-        *ngFor="let buttonClick of buttonClicks"
-        [ngClass]="{'blue-item': buttonClick >= 5}"
+        *ngFor="let buttonClick of buttonClicks; let clickIndex = index"
+        [ngClass]="{'blue-item': clickIndex >= 4}"
         >
-        click-id-{{ buttonClick }}
+        {{ buttonClick }}
     </li>
 </ul>

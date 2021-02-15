@@ -20,8 +20,7 @@ export class DisplayDetailsComponent implements OnInit {
   }
 
   logButtonClick() {
-    const clickId = this.buttonClicks.length + 1;
-    this.buttonClicks.push(clickId);
+    this.buttonClicks.push(new Date());
   }
 
 }
