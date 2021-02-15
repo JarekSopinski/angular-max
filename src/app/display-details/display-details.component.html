@@ -1,0 +1,15 @@
+<button 
+    class="btn btn-primary"
+    (click)="toggleDetailsDisplayed()"
+    (click)="logButtonClick()">
+    Display Details
+</button>
+<p *ngIf="areDetailsDisplayed">Secret Password = tuna</p>
+<ul *ngIf="buttonClicks.length > 0">
+    <li 
+        *ngFor="let buttonClick of buttonClicks"
+        [ngClass]="{'blue-item': buttonClick >= 5}"
+        >
+        click-id-{{ buttonClick }}
+    </li>
+</ul>
