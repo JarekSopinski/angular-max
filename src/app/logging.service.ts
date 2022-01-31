@@ -1,3 +1,6 @@
+import { Injectable } from "@angular/core";
+
+@Injectable() // not required for incjected services, but recommended
 export class LoggingService {
     
     logStatusChange(status:string) {
