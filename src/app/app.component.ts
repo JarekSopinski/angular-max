@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountsService } from './account.service';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +7,14 @@ import { AccountsService } from './account.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  accounts: { name:string, status:string }[] = [];
+  activeUsers:string[] = [];
+  inactiveUsers:string[] = [];
 
-  constructor(private accountsService: AccountsService){}
+  constructor(private usersService: UsersService){}
 
   ngOnInit(): void {
-      this.accounts = this.accountsService.accounts;
+      this.activeUsers = this.usersService.activeUsers;
+      this.inactiveUsers = this.usersService.inactiveUsers;
   }
 
 }
