@@ -11,6 +11,7 @@ import { UserComponent } from './users/user/user.component';
 import { EditServerComponent } from './servers/edit-server/edit-server.component';
 import { ServerComponent } from './servers/server/server.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ErrorPageComponent } from "./error-page/error-page.component";
 
 const appRoutes:Routes = [
     { path: '', component: HomeComponent },
@@ -29,7 +30,11 @@ const appRoutes:Routes = [
         canDeactivate: [CanDeactivateGuard] // will be activated whenever we try to leave this path
        }
     ]},
-    { path: 'not-found', component: PageNotFoundComponent },
+    // { path: 'not-found', component: PageNotFoundComponent },
+    { path: 'not-found',
+      component: ErrorPageComponent,
+      data: { message: 'Page not found!' }
+    },
     { path: '**', redirectTo: '/not-found' } // wildcard, should be last one
 ]
 
