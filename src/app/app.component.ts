@@ -14,6 +14,25 @@ export class AppComponent {
 
   suggestUserName() {
     const suggestedName = 'Superuser';
+
+    // Approach 1 - overwrite whole form
+    // this.signupForm.setValue({
+    //   userData : {
+    //     username: suggestedName,
+    //     email: ''
+    //   },
+    //   secret: 'pet',
+    //   questionAnswer: '',
+    //   gender: 'male'
+    // });
+
+    // Approach 2 - only overwrite specific value
+    this.signupForm.form.patchValue({
+      userData: {
+        username: suggestedName
+      }
+    });
+
   }
 
   // onSubmit(form: NgForm) {
