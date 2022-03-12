@@ -1,83 +1,57 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 
-        <div formGroupName="userData">
+        <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
 
           <div class="form-group">
-            <label for="username">Username</label>
-            <input
+            <label for="projectName">Project Name</label>
+            <input 
               type="text"
-              id="username"
-              formControlName="username"
+              id="projectName"
+              formControlName="projectName"
               class="form-control">
-              <span 
-                *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
-                class="help-block">
-                <span 
-                  *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']">
+              <span class="help-block" *ngIf="!projectForm.get('projectName').valid && projectForm.get('projectName').touched">
+                <span *ngIf="projectForm.get('projectName').errors['projectNameIsForbidden']">
                   This name is invalid!
                 </span>
-                <span 
-                  *ngIf="signupForm.get('userData.username').errors['required']">
+                <span *ngIf="projectForm.get('projectName').errors['required']">
                   This field is required!
                 </span>
               </span>
           </div>
 
           <div class="form-group">
-            <label for="email">email</label>
-            <input
-              type="text"
+            <label for="email">Email</label>
+            <input 
+              type="email"
               id="email"
               formControlName="email"
               class="form-control">
-              <span 
-                *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
-                class="help-block">
-                Please enter a valid email!
+              <span class="help-block" *ngIf="!projectForm.get('email').valid && projectForm.get('email').touched">
+                <span *ngIf="projectForm.get('email').errors['email']">
+                  Email is invalid!
+                </span>
+                <span *ngIf="projectForm.get('email').errors['required']">
+                  This field is required!
+                </span>
               </span>
           </div>
 
-        </div>
-
-        <div class="radio" *ngFor="let gender of genders">
-          <label>
-            <input
-              type="radio"
-              formControlName="gender"
-              [value]="gender">{{ gender }}
-          </label>
-        </div>
-
-        <div formArrayName="hobbies">
-          <h4>Your Hobbies</h4>
-          <button 
-            class="btn btn-default" 
-            type="button"
-            (click)="onAddHobby()">
-            Add Hobby
-          </button>
-          <div 
-            class="form-group"
-            *ngFor="let hobbyControl of getControls(); let i = index">
-            <input 
-              type="text"
+          <div class="form-group">
+            <label for="status">Project Status</label>
+            <select
               class="form-control"
-              [formControlName]="i">
+              id="status"
+              formControlName="status">
+              <option *ngFor="let option of statusOptions" value="option">{{option}}</option>
+            </select>
           </div>
-        </div>
 
-        <span 
-          *ngIf="!signupForm.valid && signupForm.touched"
-          class="help-block">
-          Please enter valid data!
-        </span>
+          <button class="btn btn-primary" type="submit">Submit</button>
 
-        <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
 
-      </form>
     </div>
   </div>
 </div>
