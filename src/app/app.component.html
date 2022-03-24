@@ -1,57 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-
-        <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-
-          <div class="form-group">
-            <label for="projectName">Project Name</label>
-            <input 
-              type="text"
-              id="projectName"
-              formControlName="projectName"
-              class="form-control">
-              <span class="help-block" *ngIf="!projectForm.get('projectName').valid && projectForm.get('projectName').touched">
-                <span *ngIf="projectForm.get('projectName').errors['projectNameIsForbidden']">
-                  This name is invalid!
-                </span>
-                <span *ngIf="projectForm.get('projectName').errors['required']">
-                  This field is required!
-                </span>
-              </span>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input 
-              type="email"
-              id="email"
-              formControlName="email"
-              class="form-control">
-              <span class="help-block" *ngIf="!projectForm.get('email').valid && projectForm.get('email').touched">
-                <span *ngIf="projectForm.get('email').errors['email']">
-                  Email is invalid!
-                </span>
-                <span *ngIf="projectForm.get('email').errors['required']">
-                  This field is required!
-                </span>
-              </span>
-          </div>
-
-          <div class="form-group">
-            <label for="status">Project Status</label>
-            <select
-              class="form-control"
-              id="status"
-              formControlName="status">
-              <option *ngFor="let option of statusOptions" value="option">{{option}}</option>
-            </select>
-          </div>
-
-          <button class="btn btn-primary" type="submit">Submit</button>
-
-        </form>
-
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let server of servers"
+          [ngClass]="getStatusClasses(server)">
+          <span
+            class="badge">
+            {{ server.status }}
+          </span>
+          <strong>{{ server.name }}</strong> | {{ server.instanceType }} | {{ server.started }}
+        </li>
+      </ul>
     </div>
   </div>
 </div>
