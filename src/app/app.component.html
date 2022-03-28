@@ -10,7 +10,7 @@
       <ul class="list-group">
         <li
           class="list-group-item"
-          *ngFor="let server of servers | sortby:'status'"
+          *ngFor="let server of servers | sortby:'name'"
           [ngClass]="getStatusClasses(server)">
           <span
             class="badge">

@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'sortby'
+  name: 'sortby',
+  pure: false // enforce pipe on array changes
 })
 export class SortbyPipe implements PipeTransform {
 
