@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, throwError } from "rxjs";
 import { map, catchError } from 'rxjs/operators';
@@ -36,22 +36,25 @@ export class PostsService {
         // We don't subscribe here, only return the result, while subscription happens in the component,
         // so that component can output returned data!
         return this.http.get<{ [key: string]: Post }>(
-            `${this.apiUrl}/posts.json`
-            )
-            .pipe(
-              map(responseData => {
-                // convert object into an array
-                const postsArray: Post[] = [];
-                for (const key in responseData){
-                  responseData.hasOwnProperty(key) && postsArray.push({ ...responseData[key], id: key });
-                }
-                return postsArray;
-              }),
-              catchError(errorRes => {
-                  // I.e. send error to analytics server, save it to logs
-                  return throwError(errorRes);
-              })
-            );
+            `${this.apiUrl}/posts.json`,
+            {
+                headers: new HttpHeaders({'Custom-Header': 'Hello'})
+            }
+        )
+        .pipe(
+          map(responseData => {
+            // convert object into an array
+            const postsArray: Post[] = [];
+            for (const key in responseData){
+              responseData.hasOwnProperty(key) && postsArray.push({ ...responseData[key], id: key });
+            }
+            return postsArray;
+          }),
+          catchError(errorRes => {
+              // I.e. send error to analytics server, save it to logs
+              return throwError(errorRes);
+          })
+        );
     }
 
     deletePosts() {
