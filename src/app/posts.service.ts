@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { map } from 'rxjs/operators';
 
 import { Post } from "./post.model";
@@ -7,6 +8,7 @@ import { Post } from "./post.model";
 @Injectable({providedIn: 'root'})
 export class PostsService {
 
+    errorSubject = new Subject<string>();
     apiUrl:string = 'https://angular-max-334a3-default-rtdb.firebaseio.com';
     apiUrlWrong:string = 'https://angular-max-334a3-default-rtdb.firebaseioERROR.com'; // for error simulation
 
@@ -18,11 +20,16 @@ export class PostsService {
             content: content
         };
         this.http.post<{ name: string }>(
-            `${this.apiUrl}/posts.json`,
+            `${this.apiUrlWrong}/posts.json`,
             postData
-          ).subscribe(responseData => {
-            console.log(responseData);
-        });
+          ).subscribe(
+            responseData => {
+                console.log(responseData);
+            },
+            error => {
+                this.errorSubject.next(error.message);
+            }
+        );
     }
 
     fetchPosts() {
