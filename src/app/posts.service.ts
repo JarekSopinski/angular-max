@@ -7,6 +7,8 @@ import { Post } from "./post.model";
 @Injectable({providedIn: 'root'})
 export class PostsService {
 
+    apiUrl:string = 'https://angular-max-334a3-default-rtdb.firebaseio.com';
+
     constructor(private http: HttpClient) {}
 
     createAndStorePost(title: string, content: string) {
@@ -15,7 +17,7 @@ export class PostsService {
             content: content
         };
         this.http.post<{ name: string }>(
-            'https://angular-max-334a3-default-rtdb.firebaseio.com/posts.json',
+            `${this.apiUrl}/posts.json`,
             postData
           ).subscribe(responseData => {
             console.log(responseData);
@@ -26,7 +28,7 @@ export class PostsService {
         // We don't subscribe here, only return the result, while subscription happens in the component,
         // so that component can output returned data!
         return this.http.get<{ [key: string]: Post }>(
-            'https://angular-max-334a3-default-rtdb.firebaseio.com/posts.json'
+            `${this.apiUrl}/posts.json`
             )
             .pipe(
               map(responseData => {
@@ -38,6 +40,11 @@ export class PostsService {
                 return postsArray;
               })
             );
+    }
+
+    deletePosts() {
+        // As in fetch, we don't subscribe here, only return for component.
+       return this.http.delete(`${this.apiUrl}/posts.json`);
     }
 
 }
