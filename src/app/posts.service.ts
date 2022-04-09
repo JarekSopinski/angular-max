@@ -20,7 +20,7 @@ export class PostsService {
             content: content
         };
         this.http.post<{ name: string }>(
-            `${this.apiUrlWrong}/posts.json`,
+            `${this.apiUrl}/posts.json`,
             postData
           ).subscribe(
             responseData => {
@@ -36,7 +36,7 @@ export class PostsService {
         // We don't subscribe here, only return the result, while subscription happens in the component,
         // so that component can output returned data!
         return this.http.get<{ [key: string]: Post }>(
-            `${this.apiUrlWrong}/posts.json`
+            `${this.apiUrl}/posts.json`
             )
             .pipe(
               map(responseData => {
