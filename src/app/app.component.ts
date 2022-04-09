@@ -1,5 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { Post } from './post.model';
 import { PostsService } from './posts.service';
@@ -12,18 +12,14 @@ import { PostsService } from './posts.service';
 export class AppComponent implements OnInit {
   loadedPosts: Post[] = [];
   isFetching: boolean = false;
+  error:HttpErrorResponse = null;
 
   constructor(
-    private http: HttpClient,
     private postsService: PostsService
     ) {}
 
   ngOnInit() {
-    this.isFetching = true;
-    this.postsService.fetchPosts().subscribe(posts => {
-      this.isFetching = false;
-      this.loadedPosts = posts;
-    })
+    this.outputPosts();
   }
 
   onCreatePost(postData: Post) {
@@ -33,17 +29,26 @@ export class AppComponent implements OnInit {
 
   onFetchPosts() {
     // Send Http request
-    this.isFetching = true;
-    this.postsService.fetchPosts().subscribe(posts => {
-      this.isFetching = false;
-      this.loadedPosts = posts;
-    })
+    this.outputPosts();
   }
 
   onClearPosts() {
     this.postsService.deletePosts().subscribe(() => {
       this.loadedPosts = [];
     });
+  }
+
+  outputPosts() {
+    this.isFetching = true;
+    this.postsService.fetchPosts().subscribe(
+      posts => {
+      this.isFetching = false;
+      this.loadedPosts = posts;
+      }, error => {
+        this.error = error.message;
+        console.log(error);
+      }
+    )
   }
 
 }

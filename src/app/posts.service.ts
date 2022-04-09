@@ -8,6 +8,7 @@ import { Post } from "./post.model";
 export class PostsService {
 
     apiUrl:string = 'https://angular-max-334a3-default-rtdb.firebaseio.com';
+    apiUrlWrong:string = 'https://angular-max-334a3-default-rtdb.firebaseioERROR.com'; // for error simulation
 
     constructor(private http: HttpClient) {}
 
@@ -28,7 +29,7 @@ export class PostsService {
         // We don't subscribe here, only return the result, while subscription happens in the component,
         // so that component can output returned data!
         return this.http.get<{ [key: string]: Post }>(
-            `${this.apiUrl}/posts.json`
+            `${this.apiUrlWrong}/posts.json`
             )
             .pipe(
               map(responseData => {
