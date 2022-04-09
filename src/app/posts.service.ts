@@ -70,7 +70,8 @@ export class PostsService {
        return this.http.delete(
            `${this.apiUrl}/posts.json`,
            {
-               observe: 'events'
+               observe: 'events',
+               responseType: 'json' // json, blob, text
            }
         ).pipe(
             tap(event => {
