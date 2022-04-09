@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Post } from './post.model';
 
 @Component({
   selector: 'app-root',
@@ -40,9 +41,9 @@ export class AppComponent implements OnInit {
       'https://angular-max-334a3-default-rtdb.firebaseio.com/posts.json'
       )
       .pipe(
-        map(responseData => {
-          // converts object into an array
-          const postsArray = [];
+        map( (responseData: { [key: string]: Post })  => {
+          // convert object into an array
+          const postsArray: Post[] = [];
           for (const key in responseData){
             responseData.hasOwnProperty(key) && postsArray.push({ ...responseData[key], id: key });
           }
