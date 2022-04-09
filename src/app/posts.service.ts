@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
-import { map } from 'rxjs/operators';
+import { Subject, throwError } from "rxjs";
+import { map, catchError } from 'rxjs/operators';
 
 import { Post } from "./post.model";
 
@@ -46,6 +46,10 @@ export class PostsService {
                   responseData.hasOwnProperty(key) && postsArray.push({ ...responseData[key], id: key });
                 }
                 return postsArray;
+              }),
+              catchError(errorRes => {
+                  // I.e. send error to analytics server, save it to logs
+                  return throwError(errorRes);
               })
             );
     }
