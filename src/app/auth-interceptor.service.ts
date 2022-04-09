@@ -1,5 +1,6 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { HttpEvent, HttpEventType, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { tap } from 'rxjs/operators';
 
 export class AuthInterceptorService implements HttpInterceptor {
 
@@ -16,7 +17,10 @@ export class AuthInterceptorService implements HttpInterceptor {
             headers: req.headers.append('Auth', 'xyz')
         })
 
-        return next.handle(modifiedRequest); // return the result to let request continue
+        return next.handle(modifiedRequest). // return the result to let request continue
+            pipe(tap(event => {
+                event.type === HttpEventType.Response && console.log('Response arrived!');
+            }))
     }
 
 }
