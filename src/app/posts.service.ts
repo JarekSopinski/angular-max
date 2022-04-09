@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject, throwError } from "rxjs";
 import { map, catchError } from 'rxjs/operators';
@@ -33,12 +33,17 @@ export class PostsService {
     }
 
     fetchPosts() {
+        let searchParams = new HttpParams();
+        searchParams = searchParams.append('print', 'pretty');
+        searchParams = searchParams.append('custom', 'key');
+
         // We don't subscribe here, only return the result, while subscription happens in the component,
         // so that component can output returned data!
         return this.http.get<{ [key: string]: Post }>(
             `${this.apiUrl}/posts.json`,
             {
-                headers: new HttpHeaders({'Custom-Header': 'Hello'})
+                headers: new HttpHeaders({'Custom-Header': 'Hello'}),
+                params: searchParams
             }
         )
         .pipe(
