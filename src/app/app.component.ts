@@ -1,70 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-
-import { Post } from './post.model';
-import { PostsService } from './posts.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit, OnDestroy {
-  loadedPosts: Post[] = [];
-  isFetching: boolean = false;
-  errorMessage: string = null;
-  private errorSub: Subscription
+export class AppComponent {
+  list = ['Milk', 'Sugar', 'Bread'];
 
-  constructor(
-    private postsService: PostsService
-    ) {}
-
-  ngOnInit() {
-    this.errorSub = this.postsService.errorSubject.subscribe(errorMessage => {
-      this.isFetching = false;
-      this.errorMessage = errorMessage;
-      console.log(this.errorMessage);
-    });
-    this.outputPosts();
-  }
-
-  onCreatePost(postData: Post) {
-    // Send Http request
-    this.postsService.createAndStorePost(postData.title, postData.content);
-  }
-
-  onFetchPosts() {
-    // Send Http request
-    this.outputPosts();
-  }
-
-  onClearPosts() {
-    this.postsService.deletePosts().subscribe(() => {
-      this.loadedPosts = [];
-    });
-  }
-
-  outputPosts() {
-    this.isFetching = true;
-    this.postsService.fetchPosts().subscribe(
-      posts => {
-      this.isFetching = false;
-      this.loadedPosts = posts;
-      }, error => {
-        this.isFetching = false;
-        this.errorMessage = error.message;
-        console.log(error);
-      }
-    )
-  }
-
-  onHandleError() {
-    this.errorMessage = null;
-  }
-
-  ngOnDestroy(): void {
-    this.errorSub.unsubscribe();
-  }
-
+    onAdd(item) {
+      this.list.push(item);
+    }
 }
