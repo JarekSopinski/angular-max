@@ -9,6 +9,8 @@
       <div 
         [@divState]="state"
         style="width:100px;height:100px;"
+        (@divState.start)="animationStarted($event)"
+        (@divState.done)="animationEnded($event)"
       >
       </div>
       <br>
