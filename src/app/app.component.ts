@@ -52,7 +52,11 @@ import { Component } from '@angular/core';
       transition( 'void => *', [ // from non-existing to any state
         style({ opacity: 0, transform: 'translateX(-100px)' }),
         animate(300)
-      ])
+      ]),
+      transition( '* => void', animate(300, style({
+        transform: 'translateX(100px)',
+        opacity: 0
+      })))
     ])
 
   ]
@@ -73,5 +77,9 @@ export class AppComponent {
 
   onAdd(item) {
     this.list.push(item);
+  }
+
+  onDelete(item) {
+    this.list.splice(this.list.indexOf(item), 1);
   }
 }
