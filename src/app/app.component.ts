@@ -41,6 +41,18 @@ import { Component } from '@angular/core';
         animate(1000, style( { borderRadius: '50px' } )),
         animate(500)
       ])
+    ]),
+
+    // adding item to the list
+    trigger('list1', [
+      state('in', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition( 'void => *', [ // from non-existing to any state
+        style({ opacity: 0, transform: 'translateX(-100px)' }),
+        animate(300)
+      ])
     ])
 
   ]
